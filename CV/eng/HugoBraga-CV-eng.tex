@@ -1,0 +1,1536 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%% Simple LaTeX CV Template %%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% NOTE: If you find that it says                                     %%
+%%                                                                    %%
+%%                           1 of ??                                  %%
+%%                                                                    %%
+%% at the bottom of your first page, this means that the AUX file     %%
+%% was not available when you ran LaTeX on this source. Simply RERUN  %%
+%% LaTeX to get the ``??'' replaced with the number of the last page  %%
+%% of the document. The AUX file will be generated on the first run   %%
+%% of LaTeX and used on the second run to fill in all of the          %%
+%% references.                                                        %%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Don't like 10pt? Try 11pt or 12pt
+\documentclass[10pt]{article}
+\RequirePackage[T1]{fontenc}
+
+% LaTeX will typeset using Computer Modern Roman, which a lot of
+% non-mathematicians and non-engineers won't like. Also, a few PDF
+% viewers may not render CMR very well. Instead, Times New Roman can
+% be used. That's what this package does.
+\usepackage{times}
+
+% The automated optical recognition software used to digitize resume
+% information works best with fonts that do not have serifs. This
+% command uses a sans serif font throughout. Uncomment both lines (or at
+% least the second) to restore a Roman font (i.e., a font with serifs).
+% (NOTE: This requires the times package above)
+%\renewcommand{\familydefault}{\sfdefault}
+
+% This is a helpful package that puts math inside length specifications
+\usepackage{calc}
+
+% This package helps LaTeX auto-hyphenate hyphenated words if you use
+% special hyphens. For example, bio\-/mimicry will properly hyphenate
+% ``mimicry'' if necessary.
+\usepackage[shortcuts]{extdash}
+
+% Layout: Puts the section titles on left side of page
+\reversemarginpar
+
+%
+%         PAPER SIZE, PAGE NUMBER, AND DOCUMENT LAYOUT NOTES:
+%
+% The next \usepackage line changes the layout for CV style section
+% headings as marginal notes. It also sets up the paper size as either
+% letter or A4. By default, letter was used. If A4 paper is desired,
+% comment out the letterpaper lines and uncomment the a4paper lines.
+%
+% As you can see, the margin widths and section title widths can be
+% easily adjusted.
+%
+% ALSO: Notice that the includefoot option can be commented OUT in order
+% to put the PAGE NUMBER *IN* the bottom margin. This will make the
+% effective text area larger.
+%
+% IF YOU WISH TO REMOVE THE ``of LASTPAGE'' next to each page number,
+% see the note about the +LP and -LP lines below. Comment out the +LP
+% and uncomment the -LP.
+%
+% IF YOU WISH TO REMOVE PAGE NUMBERS, be sure that the includefoot line
+% is uncommented and ALSO uncomment the \pagestyle{empty} a few lines
+% below.
+%
+
+%% Use these lines for letter-sized paper
+\usepackage[paper=letterpaper,
+            %includefoot, % Uncomment to put page number above margin
+            marginparwidth=1.2in,     % Length of section titles
+            marginparsep=.05in,       % Space between titles and text
+            margin=1in,               % 1 inch margins
+            includemp]{geometry}
+
+%% Use these lines for A4-sized paper
+%\usepackage[paper=a4paper,
+%            %includefoot, % Uncomment to put page number above margin
+%            marginparwidth=30.5mm,    % Length of section titles
+%            marginparsep=1.5mm,       % Space between titles and text
+%            margin=25mm,              % 25mm margins
+%            includemp]{geometry}
+
+%% More layout: Get rid of indenting throughout entire document
+\setlength{\parindent}{0in}
+
+% Provides special list environments and macros to create new ones
+\usepackage[shortlabels]{enumitem}
+
+% Simpler bibsections for CV sections
+% (thanks to natbib for inspiration)
+%
+% * For lists of references with hanging indents and no numbers:
+%
+%   \begin{bibsection}
+%       \item ...
+%   \end{bibsection}
+%
+% * For numbered lists of references (with hanging indents):
+%
+%   \begin{bibenum}
+%       \item ...
+%   \end{bibenum}
+%
+%   Note that bibenum numbers continuously throughout. To reset the
+%   counter, use
+%
+%   \restartlist{bibenum}
+%
+%   at the place where you want the numbering to reset.
+
+%extraido do resumo de Ken Mankoff
+% http://tex.stackexchange.com/questions/9768/multibib-reverse-label-or-sort-order
+%the sorting parameter allows me to not need to sort the references in bib file
+%% \usepackage[backend=biber,style=numeric, defernumbers=true,
+%% firstinits=true, maxnames=9, sorting=ydnt]{biblatex}
+
+%----hugo-------
+%% \usepackage[backend=biber,style=numeric, defernumbers=true,
+%%   giveninits=true, maxnames=9, sorting=ydnt]{biblatex}
+\usepackage{csquotes}
+\usepackage[english]{babel}
+%\printbibliography[heading=none]
+%% \usepackage{etoolbox}
+%% \patchcmd{\thebibliography}{\section*{\refname}}{}{}{}
+%% \usepackage{polyglossia}
+%% \setmainlanguage{english}
+%% \setotherlanguage[variant=brazilian]{portuguese}
+\usepackage{refcount}%------12/02/20----------
+\usepackage[
+    backend=biber,
+    style=numeric,
+    giveninits=true,
+    maxcitenames=99,
+    maxbibnames=99,
+    sorting=ydnt,
+    %sorting=adnyvt,
+    sortlocale=en-US,
+    defernumbers=true,
+    refsegment=section,
+    isbn=false,
+]{biblatex}
+\addbibresource{HugoBraga-CV-eng.bib}
+%---------------
+
+% http://tex.stackexchange.com/questions/9768/multibib-reverse-label-or-sort-order
+%% \AtDataInput{%
+%%   \csnumgdef{entrycount:\strfield{prefixnumber}}{%
+%%     \csuse{entrycount:\strfield{prefixnumber}}+1}}
+%% \DeclareFieldFormat{labelnumber}{\mkbibdesc{#1}}
+%% \newrobustcmd*{\mkbibdesc}[1]{%
+%%   \number\numexpr\csuse{entrycount:\strfield{prefixnumber}}+1-#1\relax}
+
+%\bibliography{hugo.bib}
+
+% remove ``in''
+\renewbibmacro{in:}{}
+
+% make the citations ([42]) smaller. Use \tiny,\scriptsize,\footnotesize, or \small
+\let\oldcite=\cite
+\renewcommand{\cite}[1]{\footnotesize{\textbf{\oldcite{#1}}}\normalsize{}}
+
+%%% uncomment to hide citations
+%\renewcommand{\cite}[2][]{\unskip}
+
+%\nocite{*} %29/03/20
+%fim da extraido do resumo de Ken Mankoff
+
+%------hugo-----------29/02/20
+%% \makeatletter
+%% \patchcmd{\blx@printbibliography}
+%%   {\blx@bibliography\blx@tempa}
+%%   {\setcounter{bibitemtotal}{0}%
+%%    \begingroup
+%%    \def\do##1{\stepcounter{bibitemtotal}}%
+%%    \dolistloop{\blx@tempa}%
+%%    \endgroup
+%%    \blx@bibliography\blx@tempa}{}{}
+%% \makeatother
+
+%% \newcounter{bibitemtotal}
+%% \newrobustcmd*{\mkbibdesc}[1]{%
+%%   \number\numexpr\value{bibitemtotal}+1-#1\relax}
+%% \DeclareFieldFormat{labelnumber}{\mkbibdesc{#1}}
+%% \DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
+
+%% \defbibenvironment{bibliography}
+%%   {\list
+%%      {\printtext[labelnumberwidth]{\printfield{labelprefix}\printfield{labelnumber}}}
+%%      {}%
+%%       \renewcommand*{\makelabel}[1]{\hss##1}}
+%%   {\endlist}
+%%   {\item}
+  %------fim hugo-------
+  
+%% \AtDataInput{%
+%%   \csnumgdef{entrycount:\strfield{prefixnumber}}{%
+%%     \csuse{entrycount:\strfield{prefixnumber}}+1}}
+%% \DeclareFieldFormat{labelnumber}{\mkbibdesc{#1}}
+%% \newrobustcmd*{\mkbibdesc}[1]{%
+%%   \number\numexpr\csuse{entrycount:\strfield{prefixnumber}}+1-#1\relax}
+
+%% \makeatletter
+%% %\newlength{\bibhang} %ja esta no biblatex.sty
+%% \setlength{\bibhang}{1em}
+%% \newlength{\bibsep}
+%%  {\@listi \global\bibsep\itemsep \global\advance\bibsep by\parsep}
+%% \newlist{bibsection}{itemize}{3}
+%% \setlist[bibsection]{label=,leftmargin=\bibhang,%
+%%         itemindent=-\bibhang,
+%%         itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+%%         topsep=0pt}
+%% \newlist{bibenum}{enumerate}{3}
+%% \setlist[bibenum]{label=[\arabic*],resume,leftmargin={\bibhang+\widthof{[999]}},%
+%%         itemindent=-\bibhang,
+%%         itemsep=\bibsep,parsep=\z@,partopsep=0pt,
+%%         topsep=0pt}
+%% \let\oldendbibenum\endbibenum
+%% \def\endbibenum{\oldendbibenum\vspace{-.6\baselineskip}}
+%% \let\oldendbibsection\endbibsection
+%% \def\endbibsection{\oldendbibsection\vspace{-.6\baselineskip}}
+%% \makeatother
+
+%%apagando----------12/02/20--------
+%----05/04/20----------
+%% \AtDataInput[publication]{
+%%  \xifinlistcs{\thefield{entrykey}}{entrylist:\therefsection}{}{
+%%   \listcsxadd{entrylist:\therefsection}{\thefield{entrykey}}
+%%   \csnumgdef{publicationentrycount:\therefsection}{
+%%       \csuse{publicationentrycount:\therefsection}+1}}}
+
+%% \DeclareFieldFormat[publication]{labelnumber}{\mkbibpublicationdesc{#1}}
+
+%% \newrobustcmd*{\mkbibpublicationdesc}[1]{
+%%   \number\numexpr\csuse{publicationentrycount:\therefsection}+1-#1\relax}
+%----05/04/20----------
+
+%-----12/04/20
+%https://tex.stackexchange.com/questions/327408/biblatex-descending-order-of-references-with-labels-not-working
+%% \makeatletter
+%% \patchcmd{\blx@printbibliography}
+%%   {\blx@bibliography\blx@tempa}
+%%   {\setcounter{otherentrycount}{0}%
+%%    \begingroup
+%%    \def\do##1{\stepcounter{otherentrycount}}%
+%%    \dolistloop{\blx@tempa}%
+%%    \endgroup
+%%    \blx@bibliography\blx@tempa}{}{}
+%% \makeatother
+
+%% \newcounter{otherentrycount}
+%% \newrobustcmd*{\mkbibdesc}[1]{%
+%%   \number\numexpr\value{otherentrycount}+1-#1\relax}
+%% \DeclareFieldFormat{labelnumber}{\mkbibdesc{#1}}
+%% \DeclareFieldFormat{labelnumberwidth}{\mkbibbrackets{#1}}
+
+%% \defbibenvironment{bibliography}
+%%   {\list
+%%      {\printtext[labelnumberwidth]{\printfield{labelprefix}\printfield{labelnumber}}}
+%%      {}%
+%%       \renewcommand*{\makelabel}[1]{\hss##1}}
+%%   {\endlist}
+%%   {\item}
+%-----  12/04/20
+
+%-----12/04/20----------------
+%% \DeclareBibliographyCategory{primary}
+%% \DeclareBibliographyCategory{secondary}
+%% \defbibheading{primary}{\subsection*{Primary sources}}
+%% \defbibheading{secondary}{\subsection*{Secondary sources}}
+
+%% \newcounter{publicationcount}
+%% \newcounter{secondary}
+%% \AtDataInput{%
+%%   \ifboolexpr{ test {\ifkeyword{publication}} } {
+%%     \addtocategory{primary}{\thefield{entrykey}}%
+%%     \stepcounter{publicationcount}
+%%   }
+%%   {}%else
+%%   \ifboolexpr{ test {\ifkeyword{secondary}} and not test {\iffieldundef{year}}
+%%     and test {\ifnumless{\thefield{year}+0}{1980}} } {
+%%     \addtocategory{secondary}{\thefield{entrykey}}%
+%%     \stepcounter{secondary}
+%%   }
+%%   {}%else
+%% }
+
+\AtDataInput{%
+  \ifkeyword{publication} {
+%  \ifboolexpr{ test {\ifkeyword{publication}} } {
+    \csnumgdef{publicationentrycount:\therefsection:\thefield{entrykey}} {%
+      \csuse{publicationentrycount:\therefsection:\thefield{entrykey}}+1
+    }
+  }
+  {}%else
+
+  \ifkeyword{grant} {
+%  \ifboolexpr{ test {\ifkeyword{grant}} } {
+    \csnumgdef{grantentrycount:\therefsection:\thefield{entrykey}} {%
+      \csuse{grantentrycount:\therefsection:\thefield{entrykey}}+1
+    }
+  }
+  {}%else
+
+  \ifkeyword{others} {
+%  \ifboolexpr{ test {\ifkeyword{others}} } {
+    \csnumgdef{otherentrycount:\therefsection:\thefield{entrykey}} {%
+      \csuse{otherentrycount:\therefsection:\thefield{entrykey}}+1
+    }
+  }
+  {}%else
+  
+}
+
+
+%% \AtDataInput[publication]{%
+%%   \csnumgdef{publicationentrycount:\therefsection:\thefield{entrykey}} {%
+%%     \csuse{publicationentrycount:\therefsection:\thefield{entrykey}}+1
+%%   }
+%% }
+
+\DeclareFieldFormat[publication]{labelnumber}{\mkbibpublicationdesc{#1}}    
+\newrobustcmd*{\mkbibpublicationdesc}[1]{%
+  \number\numexpr\csuse{publicationentrycount:\therefsection:\thefield{entrykey}}+1-#1\relax}
+
+
+%% \AtDataInput[other]{%
+%%   \csnumgdef{otherentrycount:\therefsection:\thefield{entrykey}}{%
+%%     \csuse{otherentrycount:\therefsection:\thefield{entrykey}}+1}}
+
+\DeclareFieldFormat[others]{labelnumber}{\mkbibotherdesc{#1}}    
+\newrobustcmd*{\mkbibotherdesc}[1]{%
+  \number\numexpr\csuse{otherentrycount:\therefsection:\thefield{entrykey}}+1-#1\relax}
+
+
+%% \AtDataInput[grant]{%
+%%   \csnumgdef{grantentrycount:\therefsection:\thefield{entrykey}}{%
+%%     \csuse{grantentrycount:\therefsection:\thefield{entrykey}}+1}}
+
+\DeclareFieldFormat[grant]{labelnumber}{\mkbibgrantdesc{#1}}    
+\newrobustcmd*{\mkbibgrantdesc}[1]{%
+  \number\numexpr\csuse{grantentrycount:\therefsection:\thefield{entrykey}}+1-#1\relax}
+
+
+%% \AtDataInput{%
+%%   \csnumgdef{entrycount:\therefsection:\thefield{entrykey}}{%
+%%     \csuse{entrycount:\therefsection:\thefield{entrykey}}+1}}
+
+%% \DeclareFieldFormat{labelnumber}{\mkbibdesc{#1}}    
+%% \newrobustcmd*{\mkbibdesc}[1]{%
+%%   \number\numexpr\csuse{entrycount:\therefsection:\thefield{entrykey}}+1-#1\relax}
+%-----12/04/20----------------
+
+%-----05/04/20----------------
+%% \AtDataInput[other]{
+%%  \xifinlistcs{\thefield{entrykey}}{entrylist:\therefsection}{}{
+%%   \listcsxadd{entrylist:\therefsection}{\thefield{entrykey}}
+%%   \csnumgdef{otherentrycount:\therefsection}{
+%%     \csuse{otherentrycount:\therefsection}+1}}}
+
+%% \DeclareFieldFormat[other]{labelnumber}{\mkbibotherdesc{#1}}
+%% \DeclareFieldFormat[other]{labelnumberwidth}{\mkbibbrackets{#1}}
+
+%% \newrobustcmd*{\mkbibotherdesc}[1]{
+%%   \number\numexpr\value{otherentrycount:\therefsection}+1-#1\relax}
+
+%% \AtDataInput[grant]{
+%%  \xifinlistcs{\thefield{entrykey}}{entrylist:\therefsection}{}{
+%%   \listcsxadd{entrylist:\therefsection}{\thefield{entrykey}}
+%%   \csnumgdef{grantentrycount:\therefsection}{
+%%       \csuse{grantentrycount:\therefsection}+1}}}
+
+%% \DeclareFieldFormat[grant]{labelnumber}{\mkbibgrantdesc{#1}}
+
+%% \newrobustcmd*{\mkbibgrantdesc}[1]{
+%%    \number\numexpr\csuse{grantentrycount:\therefsection}+1-#1\relax}
+%----05/04/20----------
+%%apagando----------12/02/20--------
+
+%--------------------
+
+%% Reference the last page in the page number
+%
+% NOTE: comment the +LP line and uncomment the -LP line to have page
+%       numbers without the ``of ##'' last page reference)
+%
+% NOTE: uncomment the \pagestyle{empty} line to get rid of all page
+%       numbers (make sure includefoot is commented out above)
+%
+\usepackage{fancyhdr,lastpage}
+\pagestyle{fancy}
+%\pagestyle{empty}      % Uncomment this to get rid of page numbers
+\fancyhf{}\renewcommand{\headrulewidth}{0pt}
+\fancyfootoffset{\marginparsep+\marginparwidth}
+\newlength{\footpageshift}
+\setlength{\footpageshift}
+          {0.5\textwidth+0.5\marginparsep+0.5\marginparwidth-2in}
+\lfoot{\hspace{\footpageshift}%
+       \parbox{4in}{\, \hfill %
+                    \arabic{page} of \protect\pageref*{LastPage} % +LP
+%                    \arabic{page}                               % -LP
+                    \hfill \,}}
+
+% Finally, give us PDF bookmarks
+\usepackage{color,hyperref}
+\definecolor{darkblue}{rgb}{0.0,0.0,0.3}
+\hypersetup{colorlinks,breaklinks,
+            linkcolor=darkblue,urlcolor=darkblue,
+            anchorcolor=darkblue,citecolor=darkblue}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Document Setup %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%% Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%% HEADING AT TOP OF CURRICULUM VITAE
+
+% The title (name) with a horizontal rule under it
+% (optional argument typesets an object right-justified across from name
+%  as well)
+%
+% Usage: \makeheading{name}
+%        OR
+%        \makeheading[right_object]{name}
+%
+% Place at top of document. It should be the first thing.
+% If ``right_object'' is provided in the square-braced optional
+% argument, it will be right justified on the same line as ``name'' at
+% the top of the CV. For example:
+%
+%       \makeheading[\emph{Curriculum vitae}]{Your Name}
+%
+% will put an emphasized ``Curriculum vitae'' at the top of the document
+% as a title. Likewise, a picture could be included:
+%
+%   \makeheading[{\includegraphics[height=1.5in]{my_picture}}]{Your Name}
+%
+% the picture will be flush right across from the name. For this example
+% to work, make sure the extra set of curly braces is included. Also
+% makes ure that \usepackage{graphicx} is somewhere in the preamble.
+\newcommand{\makeheading}[2][]%
+        {\hspace*{-\marginparsep minus \marginparwidth}%
+         \begin{minipage}[t]{\textwidth+\marginparwidth+\marginparsep}%
+             {\large \bfseries #2 \hfill #1}\\[-0.15\baselineskip]%
+                 \rule{\columnwidth}{1pt}%
+         \end{minipage}}
+
+%%% SECTION HEADINGS
+
+% The section headings. Flush left in small caps down pseudo-margin.
+%
+% Usage: \section{section name}
+\renewcommand{\section}[1]{\pagebreak[3]%
+    \vspace{1.3\baselineskip}%
+    \phantomsection\addcontentsline{toc}{section}{#1}%
+    \noindent\llap{\scshape\smash{\parbox[t]{\marginparwidth}{\hyphenpenalty=10000\raggedright #1}}}%
+    \vspace{-\baselineskip}\par}
+
+%%% LISTS
+
+% This macro alters a list by removing some of the space that follows the list
+% (is used by lists below)
+\newcommand*\fixendlist[1]{%
+    \expandafter\let\csname preFixEndListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixEndListend#1\endcsname\vspace{-0.6\baselineskip}}}
+
+% These macros help ensure that items in outer-type lists do not get
+% separated from the next line by a page break
+% (they are used by lists below)
+\let\originalItem\item
+\newcommand*\fixouterlist[1]{%
+    \expandafter\let\csname preFixOuterList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\def\item{\pagebreak[2]\oldItem}\csname preFixOuterList#1\endcsname}
+    \expandafter\let\csname preFixOuterListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\let\item\oldItem\csname preFixOuterListend#1\endcsname}}
+\newcommand*\fixinnerlist[1]{%
+    \expandafter\let\csname preFixInnerList#1\expandafter\endcsname\csname #1\endcsname
+    \expandafter\def\csname #1\endcsname{\let\oldItem\item\let\item\originalItem\csname preFixInnerList#1\endcsname}
+    \expandafter\let\csname preFixInnerListend#1\expandafter\endcsname\csname end#1\endcsname
+    \expandafter\def\csname end#1\endcsname{\csname preFixInnerListend#1\endcsname\let\item\oldItem}}
+
+% An itemize-style list with lots of space between items
+%
+% Usage:
+%   \begin{outerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{outerlist}
+\newlist{outerlist}{itemize}{3}
+    \setlist[outerlist]{label=\enskip\textbullet,leftmargin=*}
+    \fixendlist{outerlist}
+    \fixouterlist{outerlist}
+
+% An environment IDENTICAL to outerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{lonelist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{lonelist}
+\newlist{lonelist}{itemize}{3}
+    \setlist[lonelist]{label=\enskip\textbullet,leftmargin=*,partopsep=0pt,topsep=0pt}
+    \fixendlist{lonelist}
+    \fixouterlist{lonelist}
+
+% An itemize-style list with little space between items
+%
+% Usage:
+%   \begin{innerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{innerlist}
+\newlist{innerlist}{itemize}{3}
+    \setlist[innerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixinnerlist{innerlist}
+
+% An environment IDENTICAL to innerlist that has better pre-list spacing
+% when used as the first thing in a \section
+%
+% Usage:
+%   \begin{loneinnerlist}
+%       \item ...    % (or \item[] for no bullet)
+%   \end{loneinnerlist}
+\newlist{loneinnerlist}{itemize}{3}
+    \setlist[loneinnerlist]{label=\enskip\textbullet,leftmargin=*,parsep=0pt,itemsep=0pt,topsep=0pt,partopsep=0pt}
+    \fixendlist{loneinnerlist}
+    \fixinnerlist{loneinnerlist}
+
+%%% EXTRA SPACE
+
+% To add some paragraph space between lines.
+% This also tells LaTeX to preferably break a page on one of these gaps
+% if there is a needed pagebreak nearby.
+\newcommand{\blankline}{\quad\pagebreak[3]}
+\newcommand{\halfblankline}{\quad\vspace{-0.5\baselineskip}\pagebreak[3]}
+
+%%% FORMATTING MACROS
+
+% Provides a linked \doi{#1} that links doi:#1 to http://dx.doi.org/#1
+\usepackage{doi}
+% To change the text before the DOI, adjust this command
+%\renewcommand\doitext{doi:}
+
+% Provides a linked \url{#1} that doesn't require escape characters
+\usepackage{url}
+
+% You can adjust the style \url{} uses here:
+% (options are: same, rm, sf, tt; defaults to tt)
+\urlstyle{same}
+
+% For \email{ADDRESS}, links ADDRESS to the url mailto:ADDRESS
+% (uncomment to typeset the e\-/mail address in typewriter font;
+%  otherwise, will be typeset in the \urlstyle above)
+%\DeclareUrlCommand\emaillink{\urlstyle{tt}}
+\providecommand*\emaillink[1]{\nolinkurl{#1}}
+\providecommand*\email[1]{\href{mailto:#1}{\emaillink{#1}}}
+
+\providecommand\BibTeX{{B\kern-.05em{\sc i\kern-.025em b}\kern-.08em \TeX}}
+\providecommand\Matlab{\textsc{Matlab}}
+
+% Custom hyphenation rules for words that LaTeX has trouble with
+\hyphenation{bio-mim-ic-ry bio-in-spi-ra-tion re-us-a-ble pro-vid-er Media-Wiki}
+
+%%%%%%%%%%%%%%%%%%%%%%%% End Helper Commands %%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%% Begin CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\begin{document}
+\makeheading{Hugo V.~V.~Braga}
+
+\section{Contact Information}
+
+% NOTE: Mind where the & separators and \\ breaks are in the following
+%       table. Table is one row made up of three parboxes. The left
+%       parbox has address info, the middle parbox has a vertical bar,
+%       and the right parbox has phone and electronic contact
+%       information.
+%
+% MACROS: \rcollength is the width of the right column of the table
+%             (adjust it to your liking; default is 1.85in).
+%         \spacewidth is width of area between left and right boxes.
+%
+%\newlength{\rcollength}\setlength{\rcollength}{1.85in}%
+\newlength{\rcollength}\setlength{\rcollength}{1.95in}%
+\newlength{\spacewidth}\setlength{\spacewidth}{20pt}
+%
+\begin{tabular}[t]{@{}p{\textwidth-\rcollength-\spacewidth}@{}p{\spacewidth}@{}p{\rcollength}}%
+
+% Address box
+\parbox{\textwidth-\rcollength-\spacewidth}{%
+D.Sc. in Computer Science\\
+Address: %Rua João Bião de Cerqueira, 251, Pituba,\\
+Manaus, AM, 69060-000, Brazil%\\
+%Address 2: %Rua Vicente de Paula, 45, Paraíso,\\
+%Guanambi, BA, 46430-000, Brazil
+}
+
+&
+% Uncomment to add a vertical bar in middle of contact information
+%{\vrule width 0.5pt}
+\parbox[m][5\baselineskip]{\spacewidth}{} &
+
+% Non-snail-mail contact information
+\parbox{\rcollength}{%
+%\textit{Fax:} +1-480-965-6899 \\
+\begin{tabular}{lll}
+&\textit{Mobile:} &+55-71-99268-2584 \\
+&\textit{E-mail:}&\email{hugobraga@alumni.usp.br}\\
+& &\email{hugobraga@gmail.com}\\
+&\textit{WWW:} &\href{https://linktr.ee/hugobraga}{linktr.ee/hugobraga}
+\end{tabular}
+%\textit{WWW:} \href{http://ime.usp.br/~hbraga}{ime.usp.br/$\sim$hbraga}}
+}
+\end{tabular}
+
+%%
+%% In modern CV's, it seems like ``Objective'' is frowned upon. Instead,
+%% incorporate it into a well-constructed cover letter. The ``More
+%% information'' can go at the end of the CV, but it should not distract
+%% from the section giving references available to contact.
+%%
+%
+% \section{Objective}
+%
+% Placement in an academic position (i.e., faculty, postdoctoral, or
+% research scientist) that allows for advanced research in distributed
+% complex adaptive systems (i.e., modeling, analysis, design, and
+% verification) with a particular focus on the control of engineered
+% agents (e.g., for communications, control, software, electronics, and
+% sustainability) and the analysis of biological phenomena (e.g.,
+% self-organization, ecological rationality)
+% \begin{innerlist}
+% \item More information and auxiliary documents can be found at\\\url{http://www.tedpavlic.com/facjobsearch/}
+% \end{innerlist}
+
+\section{Research Interests}
+
+\textbf{Internet of Things and Combinatorial Optimization and Graph Theory.}
+%\textbf{Complex adaptive systems in control systems engineering and
+%behavioral science:} distributed algorithms, computational agent-based
+%modeling, hybrid dynamic systems, decentralized decision making,
+%emergence and self organization, amorphous computing, autonomous
+%systems, control, communications, verification, cooperation,
+%optimization, game theory, resource allocation, parallel computation,
+%robotics, energy systems, sustainability in the built environment,
+%behavioral ecology, engineering education, bio-mimicry and
+%bio-inspiration
+
+%\section{Academic Appointments}
+%
+%\textbf{Postdoctoral Scholar} \hfill {July 2012 to present}
+%\begin{innerlist}
+%
+%    \item[] \href{http://sols.asu.edu/}{School of Life Sciences},
+%            \href{http://www.asu.edu/}{Arizona State University}
+%    \begin{innerlist}
+%        \item Supervisor: \href{http://www.public.asu.edu/~spratt1}{Professor Stephen C.~Pratt}
+%        \item Decentralized decision making and behavioral bio-mimicry
+%            of social insects
+%        \item Affiliations (complexity science, multi-robot systems, and informational origins of life):
+%            \begin{innerlist}
+%                \item \href{http://csdc.asu.edu/}{Center for Social Dynamics and Complexity}\\
+%                    (Directors: Michael C.~Barton, Manfred Laubichler)
+%                \item \href{http://casi.asu.edu/home}{Complex Adaptive Systems @ ASU}
+%                \item \href{http://faculty.engineering.asu.edu/acs/}{Autonomous Collective Systems Laboratory} (PI: Spring Berman)
+%                \item \href{http://emergence.asu.edu/}{Emergence@ASU} (PI: Paul Davies, co-PI: Sara Walker)
+%            \end{innerlist}
+%    \end{innerlist}
+%
+%\end{innerlist}
+%
+%\halfblankline
+%
+%\textbf{Postdoctoral Researcher} \hfill {September 2010 to June 2012}
+%\begin{innerlist}
+%
+%    \item[] \href{http://www.cse.ohio-state.edu/}{Department of Computer Science and Engineering},
+%            \href{http://www.osu.edu/}{The Ohio State University}
+%    \begin{innerlist}
+%        \item \href{http://www.nfs.gov/}{National Science Foundation} Cyber-Physical Systems (ENG, \href{http://www.nsf.gov/div/index.jsp?div=eccs}{ECCS})
+%        \begin{innerlist}
+%            \item[$-$] ``Autonomous Driving in Mixed-Traffic Urban Environments''
+%                (grant~\href{http://www.nsf.gov/awardsearch/showAward.do?AwardNumber=0931669}{\#0931669})
+%            \item[$-$] Supervisor (co-PI):
+%                \href{http://www.cse.ohio-state.edu/~paolo/}%
+%                     {Professor Paolo A.~G.~Sivilotti}
+%            \item[$-$] PI:
+%                \href{http://www.ece.ohio-state.edu/~umit/}%
+%                     {Professor \"{U}mit \"{O}zg\"{u}ner}
+%        \end{innerlist}
+%    \end{innerlist}
+%
+%\end{innerlist}
+
+\section{Education}
+
+\href{http://www.usp.br/}{\textbf{University of São Paulo}},
+São Paulo, SP, Brazil
+\begin{outerlist}
+
+\item[] D.Sc.,
+        \href{http://www.ime.usp.br/dcc/}
+             {Computer Science},
+             December 2018 \cite{Braga2018}
+        \begin{innerlist}
+        \item Thesis Topic: \emph{Exact algorithms for spanner problems in graphs (in Portuguese)}
+        %\item Thesis Proposal: \emph{Cooperative Task Processing}
+        %\item Candidacy: \emph{Research Problems in Distributed Control for Energy Systems}
+        \item Superviser:
+              \href{http://www.ime.usp.br/~yw/}
+                   {Professor Yoshiko Wakabayshi}
+        \item Area of Study: Combinatorial Optimization and Graph Theory
+        \end{innerlist}
+
+\end{outerlist}
+
+\halfblankline
+
+\href{http://www.usp.br/}{\textbf{Federal University of Bahia}},
+Salvador, BA, Brazil
+\begin{outerlist}
+
+\item[] M.Sc.,
+        \href{http://wiki.dcc.ufba.br/Mecatronica/}
+             {Mechatronics}, October 2012 \cite{Braga2012}
+        \begin{innerlist}
+        \item Thesis Topic: \emph{Algorithms for the Directed k-Spanner with Minimum Degree Steiner Tree Problem}
+        \item Superviser:
+              \href{http://wiki.dcc.ufba.br/DCC/ProfFlavioAssis}
+                   {Professor Fl\'{a}vio Assis}
+        \item Area of Study: Mechatronics, Algorithms and Graph Theory
+        \end{innerlist}
+
+\item[] PgCert,
+        \href{http://www.lasid.ufba.br/easd}
+             {Distributed Systems}, December 2009
+        \begin{innerlist}
+        \item Final Project Topic: \emph{Medium Accesss Control Protocols for Wireless Sensor Networks} (in Portuguese)
+        \item Superviser:
+              \href{http://wiki.dcc.ufba.br/DCC/ProfFlavioAssis}
+                   {Professor Fl\'{a}vio Assis}
+        \item Area of Study: Medium Access Control, Algorithms
+        \end{innerlist}
+
+\item[] B.Sc.,
+        \href{http://wiki.dcc.ufba.br/DCC/}
+             {Computer Science}, December 2008
+        \begin{innerlist}
+	\item Final Project Topic: \emph{Design and Implementation of a Monitoring Mechanism for a QoS Distributed Provider } (in Portuguese)
+%        \item \emph{Magna cum Laude}, With Honors in Engineering
+%        \item Electrical specialization (emphasis on electromagnetics and digital computers)
+%        \item Minor in \href{http://www.cse.ohio-state.edu/}
+%                            {Computer and Information Systems}
+%              (programming and algorithms)
+	\item Superviser:
+              \href{http://wiki.dcc.ufba.br/DCC/ProfSergioGorender}
+                   {Professor S\'{e}rgio Gorender}
+        \item Area of Study: Quality of Service, Real-Time Systems
+        \end{innerlist}
+
+\end{outerlist}
+
+\nocite{*}
+
+ \section{Publications}
+%
+% % Add a little space to nudge next ``Ref'd Journal Publications'' marginpar
+% % down to make room for tall ``Submitted Journal Publications''
+% % marginpar. If there are enough submitted journal publications, this
+% % space will not be needed (and should be removed).
+ % \vspace{0.1in}
+
+ %% \newrefcontext[labelprefix=P]
+ %% \printbibliography[heading=none,keyword=publication,resetnumbers=true]
+%\begin{refsection}
+ \newrefcontext[labelprefix=P]
+ \printbibliography[
+%   title = {Publications},
+ heading=none,
+ keyword=publication,
+ resetnumbers=true
+]
+%\end{refsection}
+ 
+ %\addcontentsline{toc}{section}{Journal Publications}
+%\vspace{0.1in}
+
+ %% \assignrefcontextkeyws[labelprefix=O]{O}
+%% \assignrefcontextkeyws[labelprefix=G]{G}
+
+ 
+\section{Other Publications}
+
+%% \begin{refcontext}[labelprefix=O]
+%\begin{refsection}
+\newrefcontext[labelprefix=O]
+ %% \newrefcontext[labelprefix=O]
+ %% \printbibliography[heading=none,keyword=others,resetnumbers=true]
+ 
+\printbibliography[
+%  title = {Other Publications},
+ heading=none,
+ keyword=others,
+ resetnumbers=true
+ ]
+%\end{refsection}
+
+\section{Grants}
+
+%% \begin{refcontext}[labelprefix=O]
+%\begin{refsection}
+\newrefcontext[labelprefix=G]
+ %% \newrefcontext[labelprefix=G]
+ %% \printbibliography[heading=none,keyword=grant,resetnumbers=true]
+
+\printbibliography[
+%  title = {Grants},
+ heading=none,
+ keyword=grant,
+ sorting=adnyvt,
+ resetnumbers=true
+ ]
+%\end{refsection}
+
+
+%% \end{refcontext}
+
+%~ \section{Academic Service}
+%~ 
+%~ \begin{bibsection}
+%~ 
+    %~ \item \textbf{\emph{Committee for the Development of Biomimicry and
+        %~ Bio\-/inspired Research and Education Initiatives at ASU}}\\
+        %~ Chairman, Arizona State University. 2013.
+%~ 
+    %~ \item \textbf{\emph{Interdisciplinary Complexity Science Stduent
+        %~ Organization}}\\
+        %~ Founding faculty co\-/adviser, Arizona State University.
+        %~ Interdisciplinary graduate and undergraduate student group
+        %~ focused on discussion of research topics in complexity science.
+        %~ 2013.
+%~ 
+%~ \end{bibsection}
+%~ 
+%~ \section{Student Advising}
+%~ 
+%~ \begin{bibsection}
+%~ 
+    %~ \item \textbf{Hana Putnam} and \textbf{Alex Nachman}\\
+        %~ Undergraduate students in Biology, Arizona State University.
+        %~ Laboratory support of research on decentralized nutrient
+        %~ regulation in \emph{Temnothorax rugatulus} ants.
+        %~ Primary adviser: Stephen C.~Pratt.
+        %~ 2013.
+%~ 
+    %~ \item \textbf{Taylor Vance} and \textbf{P.~Logan Rogers}
+        %~ and \textbf{Betsy Siegworth}\\
+        %~ Undergraduate students in Biology, Arizona State University.
+        %~ Laboratory support of research on quorum detection by encounter
+        %~ rate in \emph{Temnothorax rugatulus} ants.
+        %~ Primary adviser: Stephen C.~Pratt.
+        %~ 2013.
+%~ 
+    %~ \item \textbf{Sean T.~Wilson}\\
+        %~ Graduate student in Mechanical Engineering, Arizona State University.
+        %~ Dynamical modeling and analysis of the collective carrying
+        %~ behaviors of \emph{Aphaenogaster cockerelli} ants.
+        %~ Primary adviser: Spring M.~Berman.
+        %~ 2012--2013.
+%~ 
+    %~ \item \textbf{Ganesh P.~Kumar}\\
+        %~ Graduate student in Computer Science, Arizona State University.
+        %~ Bio\-/mimetic design of collective carrying algorithms for
+        %~ robotics, inspired by the ant \emph{Aphaenogaster cockerelli}.
+        %~ Primary adviser: Spring M.~Berman.
+        %~ 2012--2013.
+%~ 
+    %~ \item \textbf{Christal Johnson}\\
+        %~ Undergraduate student in Biology, Arizona State University.
+        %~ Modeling and analysis of quorum detection during emigration
+        %~ behavior in \emph{Temnothorax rugatulus} ants. Honors thesis.
+        %~ Primary adviser: Stephen C.~Pratt.
+        %~ 2012.
+%~ 
+    %~ \item \textbf{Cory Henderson}, \textbf{James O'Donnell},
+        %~ \textbf{Ian Neack}, and \textbf{Patrick Whewell}\\
+        %~ Undergraduate students in Electrical and Computer Engineering.
+        %~ Group design project on retrofittable
+        %~ vehicle\-/to\-/vehicle communications system for
+        %~ adaptive\-/cruise\-/control in mixed\-/traffic environments.
+        %~ Primary adviser: Keith Redmill.
+        %~ 2012.
+%~ 
+    %~ \item \textbf{Manas Agrawal}
+        %~ Graduate student in Computer Science and Engineering.
+        %~ Software verification and model checking applied to railroad
+        %~ safety problems.
+        %~ Primary adviser: Bruce W.~Weide.
+        %~ 2012.
+%~ 
+    %~ \item \textbf{Sai Prathyusha Peddi}
+        %~ Graduate student in Computer Science and Engineering.
+        %~ Software verification applied to adaptive cruise
+        %~ control and instrumented intersection signal timing.
+        %~ Primary adviser: Bruce W.~Weide.
+        %~ 2011--2012.
+%~ 
+    %~ \item \textbf{Jaeyong Park}.
+        %~ Graduate student in Electrical and Computer Engineering.
+        %~ Provably correct on\-/line control synthesis for
+        %~ autonomous vehicles with hybrid dynamics.
+        %~ Primary adviser: \"{U}mit \"{O}zg\"{u}ner.
+        %~ 2011--2012.
+%~ 
+%~ \end{bibsection}
+
+\section{Teaching Experience}
+
+\href{http://www.ufba.br/}{\textbf{Federal University of Bahia}},
+Salvador, BA, Brazil
+\begin{outerlist}
+
+\item[] \textit{Assistant Lecturer} for MATA86: Computer Networks
+    \hfill \textbf{August~2011 to December~2011}
+    \begin{innerlist}
+        \item Graduate-level and Undergraduate-level course in algorithms for 
+Wireless Sensor Networks
+    \end{innerlist}
+
+\end{outerlist}
+
+\halfblankline
+
+\href{http://ifba.edu.br/}{\textbf{Federal Institute of Education, Science and Technology of Bahia (IFBa)}},
+Salvador, BA, Brazil
+\begin{outerlist}
+
+\item[] \textit{Guest Lecturer} for Advanced Topics in Computer Science course
+    \hfill \textbf{August~2011}
+    \begin{innerlist}
+        \item Undergraduate-level course
+        \item Lecture: ``Topology control algorithms for Wireless Sensor Networks''
+    \end{innerlist}
+\end{outerlist}
+
+%~ \section{Professional Service}
+%~ 
+%~ \textbf{Committee Service}
+%~ \begin{innerlist}
+    %~ \item Officer, IEEE Special Technical Community for Human Computation
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ \textbf{Referee Service}
+%~ \begin{innerlist}
+    %~ \item \emph{49\textsuperscript{th} Annual Conference on Decision and Control}
+    %~ \item \emph{International Journal of Control}
+    %~ \item \emph{ASME Journal of Dynamic Systems, Measurement, and Control}
+    %~ \item \emph{IEEE Transactions on Signal Processing}
+    %~ \item \emph{IEEE Transactions on Control Systems Technology}
+    %~ \item \emph{IEEE Transactions on Cybernetics}
+    %~ \item \emph{IEEE Transactions on Intelligent Transportation Systems}
+    %~ \item \emph{The International Journal of Robotics Research}
+    %~ \item \emph{Engineering Applications of Artificial Intelligence}
+    %~ \item \emph{Bioinspiration \& Biomimetics}
+    %~ \item \emph{Swarm and Evolutionary Computation}
+    %~ \item \emph{Behavioral Ecology}
+    %~ \item \emph{Ecological Research}
+    %~ \item \emph{Journal of Theoretical Biology}
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ \textbf{Editorial Service}
+%~ \begin{innerlist}
+    %~ \item \emph{Human Computation}, editorial board (2014--)
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ \textbf{Conference Service}
+%~ \begin{bibsection}[\enskip\textbullet,leftmargin=*]
+    %~ \item Co\-/organizer (with Yun Kang) for technical session:
+        %~ ``Complex Systems of Social Insects in Research and Education'',
+        %~ 2013 International Symposium on Biomathematics and Ecology
+        %~ Education and Research~(BEER~2013), Arlington, VA, October
+        %~ 11--13, 2013.
+%~ 
+    %~ \item Organizer for mini\-/symposium: ``MS19: Optimization and
+        %~ Rationality in Eusocial Insects'', 2013 Society for Mathematical
+        %~ Biology Annual Meeting and Conference~(SMB~2013), Tempe, AZ,
+        %~ June 10--13, 2013.
+%~ 
+    %~ \item Organizer/Associate Editor for invited session: ``Correctness
+        %~ by Verification and Design'', 14\textsuperscript{th} IEEE
+        %~ Conference on Intelligent Transportation Systems~(ITSC~2011),
+        %~ Washington, DC, October 5--7, 2011.
+%~ \end{bibsection}
+
+\section{Professional Experience}
+%editing this section
+\href{https://www.tjam.jus.br/}{\textbf{Amazonas Court of Justice (TJAM)}},
+Manaus, Brazil
+\begin{outerlist}
+
+\item[] \textit{Analyst~-~Software Engineer}%
+        \hfill \textbf{August 2020 up to now}
+\begin{innerlist}
+\item Ranked 2º in the public service entrance exam for Analyst position~-~Speciality: Software Engineer.
+\item Member of the Information and Communication Tecnology Division (DVTIC).
+\end{innerlist}
+\end{outerlist}
+
+\halfblankline
+
+\href{http://www.usp.br}{\textbf{University of S\~{a}o Paulo}},
+S\~{a}o Paulo, SP, Brazil
+\begin{innerlist}
+  \item[] 
+    Institute of Mathematics and Statistics\\
+    Computer Science Department\\
+    Combinatorics and Combinatorial Optimization Research Group
+\end{innerlist}
+
+\begin{outerlist}
+
+\item[] \textit{Graduate Researcher}~\cite{Braga2017,Braga2018}%
+  \hfill \textbf{August 2013 to December 2018}
+  \begin{innerlist}
+    
+  \item Funding:~\cite{Grant2014}
+  \item Supervisor: \href{http://www.ime.usp.br/~yw}%
+    {Professor Yoshiko Wakabayashi}
+  \item Research: Combinatorial Optimization and Graph Theory.
+  \item Proposal of the first two ILP formulations for the \emph{Minimal Weight Tree $t$-Spanner Problem}.
+  \item Proposal of an ILP formulation for the \emph{Minimal Weight $t$-Spanner Problem} (MWSP).
+  \item Presentment of some computational results on the implementation of a branch and price algorithm for MWSP based on an ILP formulation proposed by Sigurd and Zachariasen (2004).  
+
+  \end{innerlist}
+
+\end{outerlist}
+
+\halfblankline
+
+\href{http://www.ufba.br}{\textbf{Federal University of Bahia}},
+Salvador, BA, Brazil
+
+\begin{innerlist}
+  \item[]
+    Computer Science Department\\
+    Distributed Systems Laboratory (LaSiD)
+\end{innerlist}
+
+\begin{outerlist}
+
+    \item[] \textit{Graduate Researcher}~\cite{Braga2011,Braga2012}%
+            \hfill \textbf{March 2010 to April 2013}
+            \begin{innerlist}
+                \item Funding:~\cite{Grant2012,Grant2010}
+                \item Supervisor:
+                  \href{http://wiki.dcc.ufba.br/DCC/ProfFlavioAssis}
+                       {Professor Fl\'{a}vio Assis}
+
+                \item Description of a localized topology control algorithm 
+                  which is very efficient in terms of interference 
+                  while minimizing energy efficiency.
+                  
+                \item Development of a new interference metric for Wireless Sensor Networks and evaluation of 
+                some topology control algorithms based on this metric.
+
+                \item Proposal of a new problem in graph theory literature to 
+address the spanner property and degree minization called 
+                   \emph{Directed k-Spanner with Minimum 
+                    Degree Steiner Tree Problem} (DSMDStP).
+                 \item Development of an approximation algorithm and a heuristic 
+				for DSMDStP problem.
+            \end{innerlist}
+            
+		\item[] \textit{Undergraduate Researcher}~\cite{Braga2008}%
+            \hfill \textbf{August 2007 to July 2008}
+            \begin{innerlist}
+                \item Funding:~\cite{Grant2007b}
+                \item Supervisor:
+                  \href{http://wiki.dcc.ufba.br/DCC/ProfSergioGorender}
+                   {Professor S\'{e}rgio Gorender}
+                \item Designed and implemented a monitoring mechanism for a QoS
+ Distributed Provider using C language and SNMP protocol, and the mechanism was
+ applied in Xenomai Real-Time Operating System and the Expedited Services of 
+Cisco routers.
+            \end{innerlist}
+
+\end{outerlist}
+
+\halfblankline
+
+\href{http://www.prodeb.ba.gov.br}{\textbf{Data Processing Company of the State of Bahia (Prodeb)}},
+Salvador, Brazil
+\begin{outerlist}
+
+\item[] \textit{Software Engineer}%
+        \hfill \textbf{February 2009 to February 2010}
+\begin{innerlist}
+\item Development web services using PHP language.
+\item Co-development a calendar system using PHP language along with Postgres DB 
+and script languages.
+\item Wrote (English) tutorials for the open source community as well as 
+documentation for the developed systems.
+\end{innerlist}
+\end{outerlist}
+
+\halfblankline
+
+\href{http://www.geotecnia.ufba.br/}{\textbf{Federal University of Bahia}},
+Salvador, BA, Brazil
+
+\begin{innerlist}
+  \item[]
+    Polytechnic school\\
+    Geotechnical Laboratory
+\end{innerlist}
+
+\begin{outerlist}
+
+\item[] \textit{Programmer}%
+        \hfill \textbf{January 2007 to May 2007}
+\begin{innerlist}
+\item Funding:~\cite{Grant2007a}
+\item Maintenance and development of a system in DELPHI for sample management and calculation of soil tests called LabGeo.
+\item Support the development of a web system for a weather station using PHP
+ and MySQL languages.
+\end{innerlist}
+
+\end{outerlist}
+
+\section{Professional Memberships}
+
+%Institute for Electrical and Electronics Engineers~(IEEE), Member,
+%2002--present
+%
+\begin{innerlist}
+\item \href{http://www.redebrasileira.org}{Brazilian Network of Smart and Human Cities - RBCIH} (05/2020--today)
+\item \href{https://abinc.org.br/conexao-iot}{The Internet of Things Brazilian Association - IoT Connection} (04/2020--today)    
+\item \href{http://www.ime.usp.br/~yoshi/index_combinatorics.html}{Combinatorics and Combinatorial Optimization Research Group} (08/2013--12/2018)
+\item \href{http://www.lasid.ufba.br/}{Distributed Systems Laboratory (LaSiD)} (08/2007--12/2008; 03/2010--06/2013)
+\item \href{http://www.sbc.org.br/en/}{Brazilian Computer Society (SBC)} (2007--2009)
+\end{innerlist}
+
+%\halfblankline
+%
+%Animal Behavior Society, Member, 2011--present
+%
+%\halfblankline
+%
+%International Union for the Study of Social Insects, Member, 2012--present
+%\begin{innerlist}
+%\item North American Section (2012--present)
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Entomological Society of America, Member, 2014--present
+%\begin{innerlist}
+%\item Southwestern and Pacific Branch (2014--present)
+%\item Systematics, Evolution, and Biodiversity Section (2014--present)
+%\end{innerlist}
+%
+%\halfblankline
+%
+%Society for Mathematical Biology, Member, 2012--present
+
+\section{Other Meeting Attendance}
+
+\begin{innerlist}
+\item \href{https://telecomwebinar.com/iot-brasil-summit-2020/}{IoT 2020 Brasil Summit, June 03, 2020}
+  
+    \item \href{http://csbc2017.mackenzie.br/eventos/2-etc}{II Meeting of Theory of Computing (XXXVII CSBC), July 03--04, 2017}
+  
+    \item \href{https://www.ic.unicamp.br/~ra134042/wopoca2017/}{I Paulista Workshop on Optimization, Combinatorics and Algorithms, June 16--18, 2017}
+  
+    \item \href{http://org.nicta.com.au/study-with-us/nicta-optimisation-summer-school-2015/}{NICTA 3rd International Optimisation Summer School, January 11--16, 2015}
+
+	\item \href{http://www.ime.usp.br/~afreire/WBA2014.html}{Workshop in Bioinformatics and Algorithms, March 25--26, 2014}
+
+    \item \href{http://www.lasid.ufba.br/disc2012/view/index.php}{26\textsuperscript{th} International Symposium on Distributed Computing, October 16--18, 2012}
+
+    \item \href{http://softwarelivre.org/fisl}{10\textsuperscript{th} International Free Software Forum, June 24--27, 2009}
+    
+    \item \href{http://www.erbase2008.ufba.br}{VIII Computer Regional School of Bahia, Alagoas and Sergipe (ERBASE), April 14--18, 2008}
+
+    \item IX Research and Graduate Seminar -- XXVII Student Research Seminar/PRPPG -- UFBA, Salvador, Brazil, November 12--14, 2008
+
+    \item \href{https://gts.nic.br/reunioes/gts-11}{GTER 20 and GTS 11 joint meetings, May 31--June 1, 2008}
+
+    \item \href{http://listas.dcc.ufba.br/pipermail/estudantes-comp/2007-November/003076.html}{XI Internal Workshop of LaSiD -- Wola, November 27, 2007}
+
+    \item \href{http://wiki.enec.org.br/ENECOMP2004}{XXII National Meeting of Computer Science Students, 2004}
+
+\end{innerlist}
+
+%~ \section{Service}
+%~ 
+%~ Intel International Science and Engineering Fair (ISEF) 2013
+%~ \begin{innerlist}
+    %~ \item Grand Award Judge for Animal Sciences
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ \href{http://opendoor.asu.edu}{Night of the Open Door},
+%~ \href{http://www.asu.edu}{Arizona State University},
+%~ 2013
+%~ %
+%~ \begin{innerlist}
+    %~ \item Staffed the ``Ants of Arizona'' exhibit
+    %~ \item Answered questions about ants and research related to them
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ Recent contributor to several open\-/source software projects, including:
+%~ \begin{innerlist}
+    %~ \item \href{http://vim-latex.sourceforge.net/}{Vim\-/LaTeX} suite
+    %~ \item \href{http://vimperator.org}{Vimperator} and
+        %~ \href{http://dactyl.sourceforge.net/pentadactyl/index}{Pentadactyl}
+        %~ Firefox extensions
+    %~ \item \href{http://git-scm.com}{Git} distributed version control
+        %~ system
+    %~ \item \href{http://www.selenic.com/mercurial/}{Mercurial} distributed version control
+        %~ system
+    %~ \item Personal projects archived at
+        %~ \url{http://hg.tedpavlic.com/}
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ Frequent contributor to \href{http://www.wikipedia.org/}{Wikipedia}
+%~ %
+%~ \begin{innerlist}
+    %~ \item Significant contributions to articles on control theory,
+        %~ electronics, and signals and systems.
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ Contributor to \href{http://www.quora.com/}{Quora}
+%~ %
+%~ \begin{innerlist}
+    %~ \item Contributions to articles on thermodynamics, chaos theory,
+        %~ electronics, and evolutionary biology.
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ \href{http://www.osufirst.org/}{OSU FIRST Robotics Team},
+%~ \href{http://www.osu.edu}{The Ohio State University}, 2000--2004
+%~ \begin{innerlist}
+%~ \item Introduced middle school and high school students to science and
+        %~ technology by participating with them in national robotics
+        %~ competitions.
+%~ \item Led 2002 team to regional silver medal
+        %~ \href{http://www.firstwiki.org/Engineering_Inspiration_Award}
+             %~ {\emph{Engineering Inspiration Award}}.
+%~ \item \emph{Lead Team Mentor}, 2002--2004
+%~ \item \emph{Component Design Team Lead Mentor}, 2001--2002
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ Ohio Science Olympiad state competition, Robot Ramble Event, 2003
+%~ %
+%~ \begin{innerlist}
+    %~ \item Supervised setup and judging of event for middle-school and
+        %~ high-school students
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ Director of Computers,
+%~ \href{http://ec.osu.edu/}{Engineers' Council},
+%~ \href{http://www.osu.edu/}{The Ohio State University}, 2002
+%~ 
+%~ \halfblankline
+%~ 
+%~ \href{http://www.linuxvirtualserver.org/}
+     %~ {Linux Virtual Server Project}, 1999--2000
+%~ \begin{innerlist}
+%~ \item Early member of the team that formed the open\-/source project that
+        %~ is now an important load balancing solution for the Linux
+        %~ software platform.
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ \href{http://www.gcfn.org/}
+     %~ {Greater Columbus Free\-/Net}, 1995--1997
+%~ \begin{innerlist}
+%~ \item Provided technical support services.
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ CompuTeen Bulletin Board System, 1993--1995
+%~ \begin{innerlist}
+%~ \item Administrated dial\-/up bulletin board system.
+%~ \item Founded and administrated TeenLiNK, an international electronic
+        %~ mail network that spread through the United States, Canada, and
+        %~ Australia and delivered mail over a series of electronic dial\-/up
+        %~ drop offs.
+%~ \end{innerlist}
+%~ 
+%~ \section{Application Areas}
+%~ 
+%~ Autonomous and Unmanned Vehicles, Flexible Manufacturing Systems,
+%~ Distributed Power Generation, Intelligent Lighting, Power Demand
+%~ Response, Microgrids, Smart Grids
+
+%\section{Hardware and Software Skills}
+\section{Skills}
+
+Languages
+%
+\begin{innerlist}
+    \item Portuguese (Native)
+    \item English (advanced speaking and writing skills~-~\href{https://drive.google.com/file/d/1gUh4rYdd2md1kp8KcbMT-JoJne5NWcQx/view?usp=sharing}{TOEFL iBT: 101, taken on December 2012})
+    \item Basic French
+\end{innerlist}
+
+\halfblankline
+
+Program/Script Languages
+%
+\begin{innerlist}
+    \item C/C++, Java, Python, Shell Script, PHP
+\end{innerlist}
+
+\halfblankline
+
+Scientific Softwares
+%
+\begin{innerlist}
+    \item ILP Solver: CPLEX
+    \item Simulator/Emulator: The ONE, Omnet++, Castalia, SMPL
+    \item Real-Time: Xenomai, Diffserv (Cisco Routers)
+    \item Others: SNMP, Lemon (c++)
+\end{innerlist}
+
+%~ \section{Expertise}
+%~ 
+%~ Mathematics:
+%~ %
+%~ \begin{innerlist}
+    %~ \item Applied Mathematics, Real and Complex Analysis, Measure
+        %~ Theory, Differential Geometry, Game Theory, Graph Theory,
+        %~ Combinatorics
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ Control Theory and Engineering:
+%~ %
+%~ \begin{innerlist}
+    %~ \item Linear and Nonlinear Systems Theory, Feedback, Variable
+        %~ Structure Systems and Sliding Modes, Distributed and Intelligent
+        %~ Control, Dynamic Optimization, Biomimicry, Bioinspiration,
+        %~ Hybrid and CyberPhysical Systems
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ Communications and Signal Processing:
+%~ %
+%~ \begin{innerlist}
+    %~ \item Probability, Random Variables, Stochastic Processes,
+        %~ Information Theory, Estimation, Networks
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ Computer Science and Engineering:
+%~ %
+%~ \begin{innerlist}
+    %~ \item Model Checking (automated, distributed, hybrid,
+        %~ probabilistic), Hybrid Automata, Software Verification,
+        %~ Component\-/Based Reusable Software
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ Natural and Social Sciences (Biology, Neuroscience, Psychology, Anthropology):
+%~ %
+%~ \begin{innerlist}
+    %~ \item Behavioral Ecology, Foraging Theory, Altruism, Impulsiveness,
+        %~ Evolution
+%~ \end{innerlist}
+%~ 
+%~ \section{Awards}
+%~ 
+%~ \href{http://www.nsf.gov/}{National Science Foundation}
+%~ \begin{innerlist}
+%~ \item \href{http://www.nsfgk12.org/}{GK\-/12 Graduate Fellowship}, 2006--2007
+%~ \item \href{http://www.nsf.gov/grfp}
+           %~ {Graduate Research Fellowship} Honorable Mention, 2005
+%~ \end{innerlist}
+%~ 
+%~ \halfblankline
+%~ 
+%~ \href{http://www.osu.edu}{The Ohio State University}
+%~ \begin{innerlist}
+%~ \item \href{http://www.gradsch.osu.edu/graduate-school-fellowships-for-first-year-graduate-students.html}
+           %~ {Dean's Distinguished University (DDU) Graduate Fellowship}, 2004--2010
+%~ \item Electrical and Computer Engineering Bradshaw Scholarship,
+        %~ 2002--2004
+%~ \item Electrical and Computer Engineering Shafstall Scholarship,
+        %~ 2001--2003
+%~ \item University Scholarship, 1999--2003
+%~ \end{innerlist}
+%~ 
+%~ \section{Security Clearance}
+%~ 
+%~ Department of Defense Top Secret SCI with polygraph (expired: 2002)
+
+% \section{Citizenship}
+%
+% USA
+
+\section{References Available to Contact}
+
+\href
+{http://wiki.dcc.ufba.br/DCC/ProfFlavioAssis}
+{\textbf{Prof. (Dr.-Ing) Fl\'{a}vio Assis}}
+(e-mail:~\href{mailto:fassis@ufba.br}{fassis@ufba.br})
+%
+\begin{innerlist}
+    \item Associate Professor,
+        \href{http://wiki.dcc.ufba.br/DCC/}{Departament of Computer Science},
+        \href{http://www.ufba.br/}{Federal University of Bahia}
+
+    %\item[$\diamond$] School of Life Sciences, PO Box 874501, Tempe, AZ
+    %    85287-4501
+
+    \item[$\star$] \emph{Dr.~Assis was my MSc. thesis supervisor.}
+\end{innerlist}
+
+\halfblankline
+
+\href
+{http://www.ime.usp.br/~yw/}
+{\textbf{Prof.~(Dr. rer. nat.) Yoshiko Wakabayashi}}
+(e-mail:~\href{mailto:yw@ime.usp.br}{yw@ime.usp.br})
+%
+\begin{innerlist}
+    \item Full Professor,
+        \href{http://ime.usp.br/dcc}{Department of Computer Science},
+        \href{http://www.usp.br}{University of São Paulo}
+
+    %\item[$\diamond$] School for Engineering of Matter, Transport, and
+    %    Energy, PO Box 876106, Tempe, AZ
+    %    85287-6106
+
+    \item[$\star$] \emph{Dr.~Wakabayashi was my PhD. thesis supervisor.}
+\end{innerlist}
+
+
+\halfblankline
+
+\href
+{http://www.macedo.ufba.br}
+{\textbf{Prof.~(PhD.) Raimundo J.~A.~Macêdo}}
+(e-mail:~\href{mailto:macedo@ufba.br}{macedo@ufba.br})
+%
+\begin{innerlist}
+    \item Full Professor,
+        \href{http://wiki.dcc.ufba.br/DCC/}{Departament of Computer Science},
+        \href{http://www.ufba.br/}{Federal University of Bahia}
+
+    %\item[$\diamond$] 205 Dreese Laboratories, 2015 Neil Ave., Columbus,
+    %    OH  43210
+
+    \item[$\star$] \emph{Dr.~Macêdo is the head of LaSiD.}
+\end{innerlist}
+
+\halfblankline
+
+\href
+{http://wiki.dcc.ufba.br/DCC/ProfSergioGorender}
+{\textbf{Prof.~(Dr.) Sérgio Gorender}}
+(e-mail:~\href{mailto:gorender@ufba.br}{gorender@ufba.br})
+\begin{innerlist}
+    \item Associate Professor,
+        \href{http://wiki.dcc.ufba.br/DCC/}{Departament of Computer Science},
+        \href{http://www.ufba.br/}{Federal University of Bahia}
+
+    %\item[$\diamond$] 395 Dreese Laboratories, 2015 Neil Ave., Columbus,
+    %    OH  43210
+
+    \item[$\star$] \emph{Dr.~Gorender was my B.Sc. supervisor. I did my Scientific Initiation under his supervisor.}
+\end{innerlist}
+
+% The ``More Info'' section may not be necessary; make sure it's short
+% so it doesn't prevent people from seeing references available to
+% contact.
+\section{More Information}
+
+More information and auxiliary documents can be found at\\%
+\url{http://www.ime.usp.br/~hbraga}.
+
+\end{document}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%% End CV Document %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%----------------------------------------------------------------------%
+% The following is copyright and licensing information for
+% redistribution of this LaTeX source code; it also includes a liability
+% statement. If this source code is not being redistributed to others,
+% it may be omitted. It has no effect on the function of the above code.
+%----------------------------------------------------------------------%
+% Copyright (c) 2007, 2008, 2009, 2010, 2011 by Theodore P. Pavlic
+%
+% Unless otherwise expressly stated, this work is licensed under the
+% Creative Commons Attribution-Noncommercial 3.0 United States License. To
+% view a copy of this license, visit
+% http://creativecommons.org/licenses/by-nc/3.0/us/ or send a letter to
+% Creative Commons, 171 Second Street, Suite 300, San Francisco,
+% California, 94105, USA.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
+% OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+% MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+% IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY
+% CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
+% TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+% SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+%----------------------------------------------------------------------%
