@@ -1,0 +1,17 @@
+#ignore makefile extra output in eng folder
+**/eng/*.aux
+**/eng/*.bbl
+**/eng/*.bcf
+**/eng/*.blg
+**/eng/*.log
+**/eng/*.out
+**/eng/*.xml
+
+#ignore makefile extra output in por folder
+**/por/*.aux
+**/por/*.bbl
+**/por/*.bcf
+**/por/*.blg
+**/por/*.log
+**/por/*.out
+**/por/*.xml
